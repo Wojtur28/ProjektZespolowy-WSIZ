@@ -6,6 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.example.backend.AuditBase;
+import org.example.backend.expense.ExpenseEntity;
+import org.example.backend.income.IncomeEntity;
+
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -24,5 +28,10 @@ public class UserEntity extends AuditBase {
     @Column(nullable = false)
     private String email;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ExpenseEntity> expenses;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<IncomeEntity> incomes;
 }
 
