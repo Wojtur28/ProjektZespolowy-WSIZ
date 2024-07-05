@@ -37,6 +37,7 @@ paths:
       tags:
         - "User"
       summary: "Get all users"
+      operationId: getUsers
       description: "Retrieve a list of all users"
       responses:
         200:
@@ -49,6 +50,7 @@ paths:
       tags:
         - "User"
       summary: "Create a new user"
+      operationId: createUser
       description: "Create a new user"
       parameters:
         - in: "body"
@@ -68,6 +70,7 @@ paths:
       tags:
         - "User"
       summary: "Get a user by ID"
+      operationId: getUser
       description: "Retrieve a user by their ID"
       parameters:
         - name: "id"
@@ -86,6 +89,7 @@ paths:
       tags:
         - "User"
       summary: "Update a user by ID"
+      operationId: updateUser
       description: "Update a user by their ID"
       parameters:
         - name: "id"
@@ -110,6 +114,7 @@ paths:
       tags:
         - "User"
       summary: "Delete a user by ID"
+      operationId: deleteUser
       description: "Delete a user by their ID"
       parameters:
         - name: "id"
@@ -128,6 +133,7 @@ paths:
       tags:
         - "Expense"
       summary: "Get all expenses"
+      operationId: getExpenses
       description: "Retrieve a list of all expenses"
       responses:
         200:
@@ -140,6 +146,7 @@ paths:
       tags:
         - "Expense"
       summary: "Create a new expense"
+      operationId: createExpense
       description: "Create a new expense"
       parameters:
         - in: "body"
@@ -159,6 +166,7 @@ paths:
       tags:
         - "Expense"
       summary: "Get an expense by ID"
+      operationId: getExpense
       description: "Retrieve an expense by its ID"
       parameters:
         - name: "id"
@@ -177,6 +185,7 @@ paths:
       tags:
         - "Expense"
       summary: "Update an expense by ID"
+      operationId: updateExpense
       description: "Update an expense by its ID"
       parameters:
         - name: "id"
@@ -201,6 +210,7 @@ paths:
       tags:
         - "Expense"
       summary: "Delete an expense by ID"
+      operationId: deleteExpense
       description: "Delete an expense by its ID"
       parameters:
         - name: "id"
@@ -219,6 +229,7 @@ paths:
       tags:
         - "Income"
       summary: "Get all incomes"
+      operationId: getIncomes
       description: "Retrieve a list of all incomes"
       responses:
         200:
@@ -231,6 +242,7 @@ paths:
       tags:
         - "Income"
       summary: "Create a new income"
+      operationId: createIncome
       description: "Create a new income"
       parameters:
         - in: "body"
@@ -250,6 +262,7 @@ paths:
       tags:
         - "Income"
       summary: "Get an income by ID"
+      operationId: getIncome
       description: "Retrieve an income by its ID"
       parameters:
         - name: "id"
@@ -268,6 +281,7 @@ paths:
       tags:
         - "Income"
       summary: "Update an income by ID"
+      operationId: updateIncome
       description: "Update an income by its ID"
       parameters:
         - name: "id"
@@ -292,6 +306,7 @@ paths:
       tags:
         - "Income"
       summary: "Delete an income by ID"
+      operationId: deleteIncome
       description: "Delete an income by its ID"
       parameters:
         - name: "id"
@@ -310,6 +325,7 @@ paths:
       tags:
         - "ExpenseCategory"
       summary: "Get all expense categories"
+      operationId: getExpenseCategories
       description: "Retrieve a list of all expense categories"
       responses:
         200:
@@ -322,6 +338,7 @@ paths:
       tags:
         - "ExpenseCategory"
       summary: "Create a new expense category"
+      operationId: createExpenseCategory
       description: "Create a new expense category"
       parameters:
         - in: "body"
@@ -341,6 +358,7 @@ paths:
       tags:
         - "ExpenseCategory"
       summary: "Get an expense category by ID"
+      operationId: getExpenseCategory
       description: "Retrieve an expense category by its ID"
       parameters:
         - name: "id"
@@ -359,6 +377,7 @@ paths:
       tags:
         - "ExpenseCategory"
       summary: "Update an expense category by ID"
+      operationId: updateExpenseCategory
       description: "Update an expense category by its ID"
       parameters:
         - name: "id"
@@ -383,6 +402,7 @@ paths:
       tags:
         - "ExpenseCategory"
       summary: "Delete an expense category by ID"
+      operationId: deleteExpenseCategory
       description: "Delete an expense category by its ID"
       parameters:
         - name: "id"
@@ -401,6 +421,7 @@ paths:
       tags:
         - "IncomeCategory"
       summary: "Get all income categories"
+      operationId: getIncomeCategories
       description: "Retrieve a list of all income categories"
       responses:
         200:
@@ -413,6 +434,7 @@ paths:
       tags:
         - "IncomeCategory"
       summary: "Create a new income category"
+      operationId: createIncomeCategory
       description: "Create a new income category"
       parameters:
         - in: "body"
@@ -432,6 +454,7 @@ paths:
       tags:
         - "IncomeCategory"
       summary: "Get an income category by ID"
+      operationId: getIncomeCategory
       description: "Retrieve an income category by its ID"
       parameters:
         - name: "id"
@@ -450,6 +473,7 @@ paths:
       tags:
         - "IncomeCategory"
       summary: "Update an income category by ID"
+      operationId: updateIncomeCategory
       description: "Update an income category by its ID"
       parameters:
         - name: "id"
@@ -474,6 +498,7 @@ paths:
       tags:
         - "IncomeCategory"
       summary: "Delete an income category by ID"
+      operationId: deleteIncomeCategory
       description: "Delete an income category by its ID"
       parameters:
         - name: "id"
@@ -492,6 +517,7 @@ paths:
       tags:
         - "Report"
       summary: "Get all reports"
+      operationId: getReports
       description: "Retrieve a list of all reports"
       responses:
         200:
@@ -504,6 +530,7 @@ paths:
       tags:
         - "Report"
       summary: "Create a new report"
+      operationId: createReport
       description: "Create a new report"
       parameters:
         - in: "body"
@@ -523,6 +550,7 @@ paths:
       tags:
         - "Report"
       summary: "Get a report by ID"
+      operationId: getReport
       description: "Retrieve a report by its ID"
       parameters:
         - name: "id"
@@ -541,6 +569,7 @@ paths:
       tags:
         - "Report"
       summary: "Update a report by ID"
+      operationId: updateReport
       description: "Update a report by its ID"
       parameters:
         - name: "id"
@@ -565,6 +594,7 @@ paths:
       tags:
         - "Report"
       summary: "Delete a report by ID"
+      operationId: deleteReport
       description: "Delete a report by its ID"
       parameters:
         - name: "id"
@@ -583,6 +613,7 @@ paths:
       tags:
         - "Forecast"
       summary: "Get all forecasts"
+      operationId: getForecasts
       description: "Retrieve a list of all forecasts"
       responses:
         200:
@@ -595,6 +626,7 @@ paths:
       tags:
         - "Forecast"
       summary: "Create a new forecast"
+      operationId: createForecast
       description: "Create a new forecast"
       parameters:
         - in: "body"
@@ -614,6 +646,7 @@ paths:
       tags:
         - "Forecast"
       summary: "Get a forecast by ID"
+      operationId: getForecast
       description: "Retrieve a forecast by its ID"
       parameters:
         - name: "id"
@@ -632,6 +665,7 @@ paths:
       tags:
         - "Forecast"
       summary: "Update a forecast by ID"
+      operationId: updateForecast
       description: "Update a forecast by its ID"
       parameters:
         - name: "id"
@@ -656,6 +690,7 @@ paths:
       tags:
         - "Forecast"
       summary: "Delete a forecast by ID"
+      operationId: deleteForecast
       description: "Delete a forecast by its ID"
       parameters:
         - name: "id"

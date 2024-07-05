@@ -18,22 +18,22 @@ public class ExpenseService {
     private final ExpenseCategoryMapper expenseCategoryMapper;
 
 
-    public List<Expense> findAll() {
+    public List<Expense> getExpenses() {
         return expenseMapper.toDto(expenseRepository.findAll());
     }
 
-    public Expense findById(UUID id) {
+    public Expense getExpense(UUID id) {
         return expenseRepository.findById(id)
                 .map(expenseMapper::toDto)
                 .orElse(null);
     }
 
-    public Expense save(Expense expense) {
+    public Expense createExpense(Expense expense) {
         ExpenseEntity expenseEntity = expenseMapper.toEntity(expense);
         return expenseMapper.toDto(expenseRepository.save(expenseEntity));
     }
 
-    public Expense update(UUID id, Expense expense) {
+    public Expense updateExpense(UUID id, Expense expense) {
         // TODO: Implement ExpenseEntity exception handling
         ExpenseEntity expenseEntity = expenseRepository.findById(id).orElseThrow();
 
@@ -44,7 +44,7 @@ public class ExpenseService {
         return expenseMapper.toDto(expenseRepository.save(expenseEntity));
     }
 
-    public void deleteById(UUID id) {
+    public void deleteExpense(UUID id) {
         expenseRepository.deleteById(id);
     }
 }

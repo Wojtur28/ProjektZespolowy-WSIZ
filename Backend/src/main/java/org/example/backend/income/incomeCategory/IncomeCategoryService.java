@@ -15,11 +15,11 @@ public class IncomeCategoryService {
     private final IncomeCategoryRepository incomeCategoryRepository;
     private final IncomeCategoryMapper incomeCategoryMapper;
 
-    public List<IncomeCategory> getAllIncomeCategories() {
+    public List<IncomeCategory> getIncomeCategories() {
         return incomeCategoryMapper.toDto(incomeCategoryRepository.findAll());
     }
 
-    public IncomeCategory getIncomeCategoryById(UUID id) {
+    public IncomeCategory getIncomeCategory(UUID id) {
         return incomeCategoryMapper.toDto(incomeCategoryRepository.findById(id).orElseThrow());
     }
 

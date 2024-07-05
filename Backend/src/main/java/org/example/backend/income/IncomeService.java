@@ -18,11 +18,11 @@ public class IncomeService {
     private final IncomeMapper incomeMapper;
     private final IncomeCategoryMapper incomeCategoryMapper;
 
-    public List<Income> getAllIncomes() {
+    public List<Income> getIncomes() {
         return incomeMapper.toDto(incomeRepository.findAll());
     }
 
-    public Optional<Income> getIncomeById(UUID id) {
+    public Optional<Income> getIncome(UUID id) {
         return incomeRepository.findById(id).map(incomeMapper::toDto);
     }
 
