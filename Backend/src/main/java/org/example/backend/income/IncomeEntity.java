@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.example.backend.AuditBase;
+import org.example.backend.income.incomeCategory.IncomeCategoryEntity;
 import org.example.backend.user.UserEntity;
 
 import java.time.LocalDate;
