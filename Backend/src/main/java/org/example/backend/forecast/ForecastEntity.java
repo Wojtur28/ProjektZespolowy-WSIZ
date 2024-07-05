@@ -22,7 +22,7 @@ public class ForecastEntity extends AuditBase {
     private Double predictedAmount;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private UserEntity user;
 
     @Column(nullable = false)

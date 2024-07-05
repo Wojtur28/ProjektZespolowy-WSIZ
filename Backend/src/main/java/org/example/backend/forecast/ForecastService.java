@@ -24,7 +24,9 @@ public class ForecastService {
     }
 
     public Forecast createForecast(Forecast forecast) {
-        return forecastMapper.toDto(forecastRepository.save(forecastMapper.toEntity(forecast)));
+        ForecastEntity forecastEntity = forecastMapper.toEntity(forecast);
+        forecastRepository.save(forecastEntity);
+        return forecastMapper.toDto(forecastEntity);
     }
 
     public Forecast updateForecast(UUID id, Forecast forecast) {

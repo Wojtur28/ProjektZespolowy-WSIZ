@@ -27,7 +27,8 @@ public class IncomeService {
     }
 
     public Income createIncome(Income income) {
-        return incomeMapper.toDto(incomeRepository.save(incomeMapper.toEntity(income)));
+        IncomeEntity incomeEntity = incomeMapper.toEntity(income);
+        return incomeMapper.toDto(incomeRepository.save(incomeEntity));
     }
 
     public Income updateIncome(UUID id, Income income) {
