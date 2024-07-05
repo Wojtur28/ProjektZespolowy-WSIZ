@@ -1,4 +1,4 @@
-package org.example.backend.income;
+package org.example.backend.expense.expenseCategory;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,16 +8,14 @@ import lombok.Setter;
 import org.example.backend.AuditBase;
 
 @Entity
-@Table(name = "income_categories")
+@Table(name = "expense_categories")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class IncomeCategoryEntity extends AuditBase {
+public class ExpenseCategoryEntity extends AuditBase {
 
     @Column(nullable = false, unique = true)
     private String name;
 
-
 }
-
