@@ -15,11 +15,11 @@ public class ReportService {
     private final ReportRepository reportRepository;
     private final ReportMapper reportMapper;
 
-    public List<Report> getAllReports() {
+    public List<Report> getReports() {
         return reportMapper.toDto(reportRepository.findAll());
     }
 
-    public Report getReportById(UUID id) {
+    public Report getReport(UUID id) {
         return reportMapper.toDto(reportRepository.findById(id).orElseThrow());
     }
 

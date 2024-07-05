@@ -15,11 +15,11 @@ public class ExpenseCategoryService {
     private final ExpenseCategoryRepository expenseCategoryRepository;
     private final ExpenseCategoryMapper expenseCategoryMapper;
 
-    public List<ExpenseCategory> getAllExpenseCategories() {
+    public List<ExpenseCategory> getExpenseCategories() {
         return expenseCategoryMapper.toDto(expenseCategoryRepository.findAll());
     }
 
-    public ExpenseCategory getExpenseCategoryById(UUID id) {
+    public ExpenseCategory getExpenseCategory(UUID id) {
         return expenseCategoryMapper.toDto(expenseCategoryRepository.findById(id).orElseThrow());
     }
 

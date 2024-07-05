@@ -15,11 +15,11 @@ public class ForecastService {
     private final ForecastRepository forecastRepository;
     private final ForecastMapper forecastMapper;
 
-    public List<Forecast> getAllForecasts() {
+    public List<Forecast> getForecasts() {
         return forecastMapper.toDto(forecastRepository.findAll());
     }
 
-    public Forecast getForecastById(UUID id) {
+    public Forecast getForecast(UUID id) {
         return forecastMapper.toDto(forecastRepository.findById(id).orElseThrow());
     }
 
