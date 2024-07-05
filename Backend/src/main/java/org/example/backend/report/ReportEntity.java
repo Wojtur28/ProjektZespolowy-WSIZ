@@ -28,7 +28,7 @@ public class ReportEntity extends AuditBase {
     private String type;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private UserEntity user;
 
 }

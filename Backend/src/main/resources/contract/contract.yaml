@@ -751,8 +751,6 @@ definitions:
         format: "date"
       category:
         $ref: "#/definitions/ExpenseCategory"
-      user:
-        $ref: "#/definitions/User"
 
   Income:
     type: "object"
@@ -770,8 +768,6 @@ definitions:
         format: "date"
       category:
         $ref: "#/definitions/IncomeCategory"
-      user:
-        $ref: "#/definitions/User"
 
   ExpenseCategory:
     type: "object"
@@ -781,8 +777,6 @@ definitions:
         format: "uuid"
       name:
         type: "string"
-      user:
-        $ref: "#/definitions/User"
       expenses:
         type: "array"
         items:
@@ -796,8 +790,6 @@ definitions:
         format: "uuid"
       name:
         type: "string"
-      user:
-        $ref: "#/definitions/User"
       incomes:
         type: "array"
         items:
@@ -817,8 +809,7 @@ definitions:
         format: "date"
       type:
         type: "string"
-      user:
-        $ref: "#/definitions/User"
+
 
   Forecast:
     type: "object"
@@ -832,8 +823,6 @@ definitions:
       predictedAmount:
         type: "number"
         format: "double"
-      user:
-        $ref: "#/definitions/User"
       type:
         type: "string"
 

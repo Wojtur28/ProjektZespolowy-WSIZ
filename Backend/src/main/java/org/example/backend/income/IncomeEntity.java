@@ -26,7 +26,7 @@ public class IncomeEntity extends AuditBase {
     private LocalDate date;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private UserEntity user;
 
     @ManyToOne
