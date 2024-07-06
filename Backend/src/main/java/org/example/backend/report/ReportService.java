@@ -2,6 +2,8 @@ package org.example.backend.report;
 
 import lombok.AllArgsConstructor;
 import org.example.backend.mapper.ReportMapper;
+import org.example.backend.user.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.example.model.Report;
 
@@ -14,6 +16,7 @@ public class ReportService {
 
     private final ReportRepository reportRepository;
     private final ReportMapper reportMapper;
+    private final UserRepository userRepository;
 
     public List<Report> getReports() {
         return reportMapper.toDto(reportRepository.findAll());
@@ -24,7 +27,15 @@ public class ReportService {
     }
 
     public Report createReport(Report report) {
-        return reportMapper.toDto(reportRepository.save(reportMapper.toEntity(report)));
+        ReportEntity reportEntity = reportMapper.toEntity(report);
+
+        reportEntity.setUser(userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
+                .orElseThrow(
+                        () -> new RuntimeException("User not found")
+                ));
+
+        return reportMapper.toDto(reportRepository.save(reportEntity));
+
     }
 
     public Report updateReport(UUID id, Report report) {
