@@ -1,0 +1,25 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align items at the start of the container */
+  min-height: 100vh;
+  padding-top: 50px; /* Adjust this value to move the form higher or lower */
+}
+
+mat-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.login-button {
+  width: 100%;
+  margin-top: 20px;
+  color: white;
+}

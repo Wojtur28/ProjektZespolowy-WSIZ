@@ -1,0 +1,15 @@
+export * from './expense.service';
+import { ExpenseService } from './expense.service';
+export * from './expenseCategory.service';
+import { ExpenseCategoryService } from './expenseCategory.service';
+export * from './forecast.service';
+import { ForecastService } from './forecast.service';
+export * from './income.service';
+import { IncomeService } from './income.service';
+export * from './incomeCategory.service';
+import { IncomeCategoryService } from './incomeCategory.service';
+export * from './report.service';
+import { ReportService } from './report.service';
+export * from './user.service';
+import { UserService } from './user.service';
+export const APIS = [ExpenseService, ExpenseCategoryService, ForecastService, IncomeService, IncomeCategoryService, ReportService, UserService];

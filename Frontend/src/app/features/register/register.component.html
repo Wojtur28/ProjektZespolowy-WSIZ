@@ -1,0 +1,25 @@
+<div class="register-container">
+  <mat-card>
+    <form #registerForm="ngForm" id="registerForm">
+      <mat-form-field class="full-width">
+        <mat-label>Imię</mat-label>
+        <input matInput placeholder="Imię" [(ngModel)]="registerCommand.firstName" id="firstName" name="firstName" maxlength="250" required>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-label>Nazwisko</mat-label>
+        <input matInput placeholder="Nazwisko" [(ngModel)]="registerCommand.lastName" id="lastName" name="lastName" maxlength="250" required>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-label>Hasło</mat-label>
+        <input matInput type="password" placeholder="Hasło" [(ngModel)]="registerCommand.password" id="password" name="password" maxlength="250" required>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Email" [(ngModel)]="registerCommand.email" id="email" name="email" maxlength="250" required>
+      </mat-form-field>
+      <button class="register-button mat-raised-button" mat-raised-button color="primary" (click)="onSubmit()">
+        Zarejestruj się
+      </button>
+    </form>
+  </mat-card>
+</div>
