@@ -2,17 +2,21 @@
   <div class="toolbar-container">
     <span class="title">{{ title }}</span>
     <span class="spacer"></span>
+    <span *ngIf="authService.isLoggedIn()">
+      <button mat-button routerLink="/">Strona główna</button>
+      <button mat-button routerLink="/finances">Finanse</button>
+    </span>
     <span [hidden]="authService.isLoggedIn()">
-      <button mat-button routerLink="register">
+      <button mat-button routerLink="/register">
         <mat-icon>person_add</mat-icon>
         Rejestracja
       </button>
-      <button mat-button routerLink="login">
+      <button mat-button routerLink="/login">
         <mat-icon>login</mat-icon>
         Logowanie
       </button>
     </span>
-    <span [hidden]="!authService.isLoggedIn()">
+    <span *ngIf="authService.isLoggedIn()">
       <button mat-button (click)="authService.logout()">
         <mat-icon>logout</mat-icon>
         Wyloguj się

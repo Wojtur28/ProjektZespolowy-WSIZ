@@ -777,10 +777,6 @@ definitions:
         format: "uuid"
       name:
         type: "string"
-      expenses:
-        type: "array"
-        items:
-          $ref: "#/definitions/Expense"
 
   IncomeCategory:
     type: "object"
@@ -790,10 +786,6 @@ definitions:
         format: "uuid"
       name:
         type: "string"
-      incomes:
-        type: "array"
-        items:
-          $ref: "#/definitions/Income"
 
   Report:
     type: "object"
@@ -809,7 +801,6 @@ definitions:
         format: "date"
       type:
         type: "string"
-
 
   Forecast:
     type: "object"
