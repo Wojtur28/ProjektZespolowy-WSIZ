@@ -9,11 +9,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Income } from './income';
 
 
 export interface IncomeCategory { 
     id?: string;
     name?: string;
-    incomes?: Array<Income>;
 }

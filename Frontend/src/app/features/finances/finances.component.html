@@ -1,0 +1,9 @@
+<div class="finances-toolbar">
+  <button mat-button (click)="showExpenses()">Wydatki</button>
+  <button mat-button (click)="showIncomes()">Wpływy</button>
+</div>
+
+<div class="finances-container">
+  <app-expenses *ngIf="view === 'expenses'"></app-expenses>
+  <app-incomes *ngIf="view === 'incomes'"></app-incomes>
+</div>

@@ -1,0 +1,25 @@
+.finances-toolbar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  background-color: #333;
+  padding: 20px;
+  border-radius: 8px;
+  width: 60em;
+}
+
+.toggle-button {
+  color: white;
+  margin: 0 10px;
+}
+
+.toggle-button.active {
+  background-color: #666;
+}
+
+.finances-container {
+  width: 60em;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
