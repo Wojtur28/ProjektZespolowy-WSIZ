@@ -1,25 +1,55 @@
-.finances-toolbar {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-  background-color: #333;
-  padding: 20px;
-  border-radius: 8px;
-  width: 60em;
-}
-
-.toggle-button {
-  color: white;
-  margin: 0 10px;
-}
-
-.toggle-button.active {
-  background-color: #666;
-}
-
 .finances-container {
-  width: 60em;
+  margin: 20px;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  align-items: center;
+  width: 70em;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+table {
+  width: 100%;
+}
+
+.mat-header-cell, .mat-cell {
+  padding: 8px;
+  white-space: nowrap; /* Zapobieganie zawijaniu tekstu */
+}
+
+.mat-header-cell {
+  background-color: #f1f1f1;
+}
+
+.mat-elevation-z8 {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.expense-amount {
+  color: red;
+}
+
+.income-amount {
+  color: lawngreen;
+}
+
+.date-header {
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 20px;
+  width: 100%;
+  text-align: left;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 4px;
+  justify-content: center; /* Wyśrodkowanie przycisków */
+  margin-top: 1em;
+}
+
+.mat-column-options {
+  text-align: center;
 }

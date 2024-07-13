@@ -1,9 +1,37 @@
-<div class="finances-toolbar">
-  <button mat-button (click)="showExpenses()">Wydatki</button>
-  <button mat-button (click)="showIncomes()">Wpływy</button>
-</div>
-
 <div class="finances-container">
-  <app-expenses *ngIf="view === 'expenses'"></app-expenses>
-  <app-incomes *ngIf="view === 'incomes'"></app-incomes>
+  <h2>Finanse</h2>
+  <ng-container *ngFor="let date of getDates()">
+    <h3 class="date-header">{{ getFormattedDate(date) }}</h3>
+    <table mat-table [dataSource]="groupedTransactions[date]" class="mat-elevation-z8">
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef> Kategoria </th>
+        <td mat-cell *matCellDef="let element"> {{ element.category.name }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef> Opis </th>
+        <td mat-cell *matCellDef="let element"> {{ element.description || 'Brak opisu' }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef> Kwota </th>
+        <td mat-cell *matCellDef="let element" [ngClass]="{'expense-amount': isExpense(element), 'income-amount': isIncome(element)}"> {{ element.amount | currency }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="options">
+        <th mat-header-cell *matHeaderCellDef class="mat-column-options"> Opcje </th>
+        <td mat-cell *matCellDef="let element" class="action-buttons">
+          <button mat-icon-button color="primary" (click)="editTransaction(element)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteTransaction(element.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="['category', 'description', 'amount', 'options']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['category', 'description', 'amount', 'options'];"></tr>
+    </table>
+  </ng-container>
 </div>

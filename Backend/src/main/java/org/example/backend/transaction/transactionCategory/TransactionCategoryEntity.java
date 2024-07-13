@@ -1,4 +1,4 @@
-package org.example.backend.expense.expenseCategory;
+package org.example.backend.transaction.transactionCategory;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,16 +6,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.example.backend.AuditBase;
+import org.example.backend.transaction.TransactionType;
 
 @Entity
-@Table(name = "expense_categories")
+@Table(name = "transaction_categories")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ExpenseCategoryEntity extends AuditBase {
+public class TransactionCategoryEntity extends AuditBase {
 
     @Column(nullable = false, unique = true)
     private String name;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TransactionType type;
 }

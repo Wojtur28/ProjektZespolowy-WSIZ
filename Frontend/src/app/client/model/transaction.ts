@@ -9,15 +9,21 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Transaction } from './transaction';
 import { TransactionCategory } from './transactionCategory';
 
 
-export interface User { 
+export interface Transaction { 
     id?: string;
-    username?: string;
-    email?: string;
-    password?: string;
-    transactions?: Array<Transaction>;
-    customCategories?: Array<TransactionCategory>;
+    description?: string;
+    amount?: number;
+    date?: string;
+    category?: TransactionCategory;
+    type?: Transaction.TypeEnum;
+}
+export namespace Transaction {
+    export type TypeEnum = 'INCOME' | 'EXPENSE';
+    export const TypeEnum = {
+        INCOME: 'INCOME' as TypeEnum,
+        EXPENSE: 'EXPENSE' as TypeEnum
+    };
 }
