@@ -128,46 +128,46 @@ paths:
         404:
           description: "User not found"
 
-  /expenses:
+  /transactions:
     get:
       tags:
-        - "Expense"
-      summary: "Get all expenses"
-      operationId: getExpenses
-      description: "Retrieve a list of all expenses"
+        - "Transaction"
+      summary: "Get all transactions"
+      operationId: getTransactions
+      description: "Retrieve a list of all transactions"
       responses:
         200:
-          description: "A list of expenses"
+          description: "A list of transactions"
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/Expense"
+              $ref: "#/definitions/Transaction"
     post:
       tags:
-        - "Expense"
-      summary: "Create a new expense"
-      operationId: createExpense
-      description: "Create a new expense"
+        - "Transaction"
+      summary: "Create a new transaction"
+      operationId: createTransaction
+      description: "Create a new transaction"
       parameters:
         - in: "body"
           name: "body"
-          description: "Expense object"
+          description: "Transaction object"
           required: true
           schema:
-            $ref: "#/definitions/Expense"
+            $ref: "#/definitions/Transaction"
       responses:
         201:
-          description: "Expense created"
+          description: "Transaction created"
           schema:
-            $ref: "#/definitions/Expense"
+            $ref: "#/definitions/Transaction"
 
-  /expenses/{id}:
+  /transactions/{id}:
     get:
       tags:
-        - "Expense"
-      summary: "Get an expense by ID"
-      operationId: getExpense
-      description: "Retrieve an expense by its ID"
+        - "Transaction"
+      summary: "Get a transaction by ID"
+      operationId: getTransaction
+      description: "Retrieve a transaction by its ID"
       parameters:
         - name: "id"
           in: "path"
@@ -176,17 +176,17 @@ paths:
           format: "uuid"
       responses:
         200:
-          description: "A single expense"
+          description: "A single transaction"
           schema:
-            $ref: "#/definitions/Expense"
+            $ref: "#/definitions/Transaction"
         404:
-          description: "Expense not found"
+          description: "Transaction not found"
     put:
       tags:
-        - "Expense"
-      summary: "Update an expense by ID"
-      operationId: updateExpense
-      description: "Update an expense by its ID"
+        - "Transaction"
+      summary: "Update a transaction by ID"
+      operationId: updateTransaction
+      description: "Update a transaction by its ID"
       parameters:
         - name: "id"
           in: "path"
@@ -195,23 +195,23 @@ paths:
           format: "uuid"
         - in: "body"
           name: "body"
-          description: "Updated expense object"
+          description: "Updated transaction object"
           required: true
           schema:
-            $ref: "#/definitions/Expense"
+            $ref: "#/definitions/Transaction"
       responses:
         200:
-          description: "Expense updated"
+          description: "Transaction updated"
           schema:
-            $ref: "#/definitions/Expense"
+            $ref: "#/definitions/Transaction"
         404:
-          description: "Expense not found"
+          description: "Transaction not found"
     delete:
       tags:
-        - "Expense"
-      summary: "Delete an expense by ID"
-      operationId: deleteExpense
-      description: "Delete an expense by its ID"
+        - "Transaction"
+      summary: "Delete a transaction by ID"
+      operationId: deleteTransaction
+      description: "Delete a transaction by its ID"
       parameters:
         - name: "id"
           in: "path"
@@ -220,50 +220,50 @@ paths:
           format: "uuid"
       responses:
         204:
-          description: "Expense deleted"
+          description: "Transaction deleted"
         404:
-          description: "Expense not found"
+          description: "Transaction not found"
 
-  /incomes:
+  /transaction-categories:
     get:
       tags:
-        - "Income"
-      summary: "Get all incomes"
-      operationId: getIncomes
-      description: "Retrieve a list of all incomes"
+        - "TransactionCategory"
+      summary: "Get all transaction categories"
+      operationId: getTransactionCategories
+      description: "Retrieve a list of all transaction categories"
       responses:
         200:
-          description: "A list of incomes"
+          description: "A list of transaction categories"
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/Income"
+              $ref: "#/definitions/TransactionCategory"
     post:
       tags:
-        - "Income"
-      summary: "Create a new income"
-      operationId: createIncome
-      description: "Create a new income"
+        - "TransactionCategory"
+      summary: "Create a new transaction category"
+      operationId: createTransactionCategory
+      description: "Create a new transaction category"
       parameters:
         - in: "body"
           name: "body"
-          description: "Income object"
+          description: "Transaction category object"
           required: true
           schema:
-            $ref: "#/definitions/Income"
+            $ref: "#/definitions/TransactionCategory"
       responses:
         201:
-          description: "Income created"
+          description: "Transaction category created"
           schema:
-            $ref: "#/definitions/Income"
+            $ref: "#/definitions/TransactionCategory"
 
-  /incomes/{id}:
+  /transaction-categories/{id}:
     get:
       tags:
-        - "Income"
-      summary: "Get an income by ID"
-      operationId: getIncome
-      description: "Retrieve an income by its ID"
+        - "TransactionCategory"
+      summary: "Get a transaction category by ID"
+      operationId: getTransactionCategory
+      description: "Retrieve a transaction category by its ID"
       parameters:
         - name: "id"
           in: "path"
@@ -272,17 +272,17 @@ paths:
           format: "uuid"
       responses:
         200:
-          description: "A single income"
+          description: "A single transaction category"
           schema:
-            $ref: "#/definitions/Income"
+            $ref: "#/definitions/TransactionCategory"
         404:
-          description: "Income not found"
+          description: "Transaction category not found"
     put:
       tags:
-        - "Income"
-      summary: "Update an income by ID"
-      operationId: updateIncome
-      description: "Update an income by its ID"
+        - "TransactionCategory"
+      summary: "Update a transaction category by ID"
+      operationId: updateTransactionCategory
+      description: "Update a transaction category by its ID"
       parameters:
         - name: "id"
           in: "path"
@@ -291,23 +291,23 @@ paths:
           format: "uuid"
         - in: "body"
           name: "body"
-          description: "Updated income object"
+          description: "Updated transaction category object"
           required: true
           schema:
-            $ref: "#/definitions/Income"
+            $ref: "#/definitions/TransactionCategory"
       responses:
         200:
-          description: "Income updated"
+          description: "Transaction category updated"
           schema:
-            $ref: "#/definitions/Income"
+            $ref: "#/definitions/TransactionCategory"
         404:
-          description: "Income not found"
+          description: "Transaction category not found"
     delete:
       tags:
-        - "Income"
-      summary: "Delete an income by ID"
-      operationId: deleteIncome
-      description: "Delete an income by its ID"
+        - "TransactionCategory"
+      summary: "Delete a transaction category by ID"
+      operationId: deleteTransactionCategory
+      description: "Delete a transaction category by its ID"
       parameters:
         - name: "id"
           in: "path"
@@ -316,201 +316,9 @@ paths:
           format: "uuid"
       responses:
         204:
-          description: "Income deleted"
+          description: "Transaction category deleted"
         404:
-          description: "Income not found"
-
-  /expense-categories:
-    get:
-      tags:
-        - "ExpenseCategory"
-      summary: "Get all expense categories"
-      operationId: getExpenseCategories
-      description: "Retrieve a list of all expense categories"
-      responses:
-        200:
-          description: "A list of expense categories"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/ExpenseCategory"
-    post:
-      tags:
-        - "ExpenseCategory"
-      summary: "Create a new expense category"
-      operationId: createExpenseCategory
-      description: "Create a new expense category"
-      parameters:
-        - in: "body"
-          name: "body"
-          description: "Expense category object"
-          required: true
-          schema:
-            $ref: "#/definitions/ExpenseCategory"
-      responses:
-        201:
-          description: "Expense category created"
-          schema:
-            $ref: "#/definitions/ExpenseCategory"
-
-  /expense-categories/{id}:
-    get:
-      tags:
-        - "ExpenseCategory"
-      summary: "Get an expense category by ID"
-      operationId: getExpenseCategory
-      description: "Retrieve an expense category by its ID"
-      parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          type: "string"
-          format: "uuid"
-      responses:
-        200:
-          description: "A single expense category"
-          schema:
-            $ref: "#/definitions/ExpenseCategory"
-        404:
-          description: "Expense category not found"
-    put:
-      tags:
-        - "ExpenseCategory"
-      summary: "Update an expense category by ID"
-      operationId: updateExpenseCategory
-      description: "Update an expense category by its ID"
-      parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          type: "string"
-          format: "uuid"
-        - in: "body"
-          name: "body"
-          description: "Updated expense category object"
-          required: true
-          schema:
-            $ref: "#/definitions/ExpenseCategory"
-      responses:
-        200:
-          description: "Expense category updated"
-          schema:
-            $ref: "#/definitions/ExpenseCategory"
-        404:
-          description: "Expense category not found"
-    delete:
-      tags:
-        - "ExpenseCategory"
-      summary: "Delete an expense category by ID"
-      operationId: deleteExpenseCategory
-      description: "Delete an expense category by its ID"
-      parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          type: "string"
-          format: "uuid"
-      responses:
-        204:
-          description: "Expense category deleted"
-        404:
-          description: "Expense category not found"
-
-  /income-categories:
-    get:
-      tags:
-        - "IncomeCategory"
-      summary: "Get all income categories"
-      operationId: getIncomeCategories
-      description: "Retrieve a list of all income categories"
-      responses:
-        200:
-          description: "A list of income categories"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/IncomeCategory"
-    post:
-      tags:
-        - "IncomeCategory"
-      summary: "Create a new income category"
-      operationId: createIncomeCategory
-      description: "Create a new income category"
-      parameters:
-        - in: "body"
-          name: "body"
-          description: "Income category object"
-          required: true
-          schema:
-            $ref: "#/definitions/IncomeCategory"
-      responses:
-        201:
-          description: "Income category created"
-          schema:
-            $ref: "#/definitions/IncomeCategory"
-
-  /income-categories/{id}:
-    get:
-      tags:
-        - "IncomeCategory"
-      summary: "Get an income category by ID"
-      operationId: getIncomeCategory
-      description: "Retrieve an income category by its ID"
-      parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          type: "string"
-          format: "uuid"
-      responses:
-        200:
-          description: "A single income category"
-          schema:
-            $ref: "#/definitions/IncomeCategory"
-        404:
-          description: "Income category not found"
-    put:
-      tags:
-        - "IncomeCategory"
-      summary: "Update an income category by ID"
-      operationId: updateIncomeCategory
-      description: "Update an income category by its ID"
-      parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          type: "string"
-          format: "uuid"
-        - in: "body"
-          name: "body"
-          description: "Updated income category object"
-          required: true
-          schema:
-            $ref: "#/definitions/IncomeCategory"
-      responses:
-        200:
-          description: "Income category updated"
-          schema:
-            $ref: "#/definitions/IncomeCategory"
-        404:
-          description: "Income category not found"
-    delete:
-      tags:
-        - "IncomeCategory"
-      summary: "Delete an income category by ID"
-      operationId: deleteIncomeCategory
-      description: "Delete an income category by its ID"
-      parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          type: "string"
-          format: "uuid"
-      responses:
-        204:
-          description: "Income category deleted"
-        404:
-          description: "Income category not found"
+          description: "Transaction category not found"
 
   /reports:
     get:
@@ -722,20 +530,16 @@ definitions:
         format: "email"
       password:
         type: "string"
-      expenses:
+      transactions:
         type: "array"
         items:
-          $ref: "#/definitions/Expense"
-      incomes:
-        type: "array"
-        items:
-          $ref: "#/definitions/Income"
+          $ref: "#/definitions/Transaction"
       customCategories:
         type: "array"
         items:
-          $ref: "#/definitions/ExpenseCategory"
+          $ref: "#/definitions/TransactionCategory"
 
-  Expense:
+  Transaction:
     type: "object"
     properties:
       id:
@@ -750,26 +554,14 @@ definitions:
         type: "string"
         format: "date"
       category:
-        $ref: "#/definitions/ExpenseCategory"
+        $ref: "#/definitions/TransactionCategory"
+      type:
+        type: "string"
+        enum:
+          - "INCOME"
+          - "EXPENSE"
 
-  Income:
-    type: "object"
-    properties:
-      id:
-        type: "string"
-        format: "uuid"
-      description:
-        type: "string"
-      amount:
-        type: "number"
-        format: "double"
-      date:
-        type: "string"
-        format: "date"
-      category:
-        $ref: "#/definitions/IncomeCategory"
-
-  ExpenseCategory:
+  TransactionCategory:
     type: "object"
     properties:
       id:
@@ -777,15 +569,11 @@ definitions:
         format: "uuid"
       name:
         type: "string"
-
-  IncomeCategory:
-    type: "object"
-    properties:
-      id:
+      type:
         type: "string"
-        format: "uuid"
-      name:
-        type: "string"
+        enum:
+          - "INCOME"
+          - "EXPENSE"
 
   Report:
     type: "object"

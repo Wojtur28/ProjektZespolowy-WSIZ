@@ -1,4 +1,4 @@
-package org.example.backend.income;
+package org.example.backend.transaction;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface IncomeRepository extends JpaRepository<IncomeEntity, UUID> {
+public interface TransactionRepository extends JpaRepository<TransactionEntity, UUID> {
 }

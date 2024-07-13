@@ -6,8 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.example.backend.AuditBase;
-import org.example.backend.expense.ExpenseEntity;
-import org.example.backend.income.IncomeEntity;
+import org.example.backend.transaction.TransactionEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -36,10 +35,7 @@ public class UserEntity extends AuditBase implements UserDetails {
     private String lastName;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ExpenseEntity> expenses;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<IncomeEntity> incomes;
+    private List<TransactionEntity> transactions;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
