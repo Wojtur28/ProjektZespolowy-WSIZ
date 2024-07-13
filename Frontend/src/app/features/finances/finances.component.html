@@ -3,21 +3,25 @@
   <ng-container *ngFor="let date of getDates()">
     <h3 class="date-header">{{ getFormattedDate(date) }}</h3>
     <table mat-table [dataSource]="groupedTransactions[date]" class="mat-elevation-z8">
+      <!-- Category Column -->
       <ng-container matColumnDef="category">
-        <th mat-header-cell *matHeaderCellDef> Kategoria </th>
+        <th mat-header-cell *matHeaderCellDef class="mat-column-category"> Kategoria </th>
         <td mat-cell *matCellDef="let element"> {{ element.category.name }} </td>
       </ng-container>
 
+      <!-- Description Column -->
       <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef> Opis </th>
+        <th mat-header-cell *matHeaderCellDef class="mat-column-description"> Opis </th>
         <td mat-cell *matCellDef="let element"> {{ element.description || 'Brak opisu' }} </td>
       </ng-container>
 
+      <!-- Amount Column -->
       <ng-container matColumnDef="amount">
-        <th mat-header-cell *matHeaderCellDef> Kwota </th>
+        <th mat-header-cell *matHeaderCellDef class="mat-column-amount"> Kwota </th>
         <td mat-cell *matCellDef="let element" [ngClass]="{'expense-amount': isExpense(element), 'income-amount': isIncome(element)}"> {{ element.amount | currency }} </td>
       </ng-container>
 
+      <!-- Options Column -->
       <ng-container matColumnDef="options">
         <th mat-header-cell *matHeaderCellDef class="mat-column-options"> Opcje </th>
         <td mat-cell *matCellDef="let element" class="action-buttons">
