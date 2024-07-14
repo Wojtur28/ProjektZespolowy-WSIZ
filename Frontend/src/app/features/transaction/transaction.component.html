@@ -1,6 +1,19 @@
 <div class="finances-container">
   <h2>Finanse</h2>
-  <button mat-raised-button color="primary" (click)="openNewTransactionDialog()">Dodaj nową transakcję</button>
+
+  <div class="action-buttons-menu">
+    <button mat-raised-button (click)="openNewTransactionDialog()">Dodaj nową transakcję</button>
+    <button mat-raised-button (click)="openManageCategoriesDialog()">Zarządzaj kategoriami</button>
+  </div>
+
+  <br>
+
+  <div class="month-navigation">
+    <button mat-raised-button *ngFor="let month of months" (click)="setMonth(month)">
+      {{ monthNames[month - 1] }}
+    </button>
+  </div>
+
   <ng-container *ngFor="let date of getDates()">
     <h3 class="date-header">{{ getFormattedDate(date) }}</h3>
     <h4 class="balance-header" [ngClass]="{'positive-balance': getDailyBalance(date) > 0, 'negative-balance': getDailyBalance(date) < 0}">

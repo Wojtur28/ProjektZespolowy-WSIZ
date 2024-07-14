@@ -1,26 +1,34 @@
 import {Injectable} from "@angular/core";
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
+import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import {AuthService} from "./auth.service";
-import {Observable} from "rxjs";
+import {catchError, Observable, throwError} from "rxjs";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
-  constructor(public auth: AuthService) {
-  }
+  constructor(private auth: AuthService, private router: Router) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (this.auth.getToken() != null) {
-
-      if (request.url.indexOf("/auth/signin") == -1 && request.url.indexOf("/auth/signup") == -1) {
+    const token = this.auth.getToken();
+    if (token) {
+      if (!request.url.includes('/auth/signin') && !request.url.includes('/auth/signup')) {
         request = request.clone({
           setHeaders: {
-            Authorization: `Bearer ${this.auth.getToken()}`
+            Authorization: `Bearer ${token}`
           }
         });
       }
-
     }
-    return next.handle(request);
+
+    return next.handle(request).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          this.auth.logout();
+          this.router.navigate(['/login']);
+        }
+        return throwError(error);
+      })
+    );
   }
 }

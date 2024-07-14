@@ -98,11 +98,18 @@ table {
   background-color: #0056b3;
 }
 
-.positive-balance {
-  color: green;
+.action-buttons-menu {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 
-.negative-balance {
-  color: red;
+.month-navigation {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
+.month-navigation button {
+  margin: 5px 5px 0;
+}
