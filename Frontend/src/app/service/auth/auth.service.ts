@@ -6,14 +6,11 @@ import {Router} from "@angular/router";
 })
 export class AuthService {
 
-  constructor( private router: Router) { }
+  constructor(private router: Router) { }
 
-  isLoggedIn() {
+  isLoggedIn(): boolean {
     const token = localStorage.getItem('token');
-    if (token) {
-      return true;
-    }
-    return false;
+    return !!token;
   }
 
   logout() {
@@ -21,7 +18,7 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  getToken() {
+  getToken(): string | null {
     return localStorage.getItem('token');
   }
 }

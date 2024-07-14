@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Dodaj nową transakcję</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Kategoria</mat-label>
+    <input matInput [(ngModel)]="newTransaction.category">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Opis</mat-label>
+    <input matInput [(ngModel)]="newTransaction.description">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Kwota</mat-label>
+    <input matInput [(ngModel)]="newTransaction.amount" type="number">
+  </mat-form-field>
+  <!-- Add more fields as needed -->
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Anuluj</button>
+  <button mat-button (click)="onSave()">Zapisz</button>
+</div>
