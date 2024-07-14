@@ -3,11 +3,13 @@ import {LoginComponent} from "./features/login/login.component";
 import {RegisterComponent} from "./features/register/register.component";
 import {HomeComponent} from "./features/home/home.component";
 import {FinancesComponent} from "./features/finances/finances.component";
+import {AuthGuard} from "@app/service/auth/auth.guard";
 
 export const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    component: HomeComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'register',
@@ -19,6 +21,7 @@ export const routes: Routes = [
   },
   {
     path: 'finances',
-    component: FinancesComponent
+    component: FinancesComponent,
+    canActivate: [AuthGuard]
   }
 ];

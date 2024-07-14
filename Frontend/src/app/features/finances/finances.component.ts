@@ -15,6 +15,10 @@ import {TransactionService} from "@app/client/api/transaction.service";
 import {format} from "date-fns";
 import {pl} from "date-fns/locale/pl";
 import {MatIcon} from "@angular/material/icon";
+import {
+  CreateTransactionComponent
+} from "@app/features/finances/create-transaction/create-transaction/create-transaction.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-finances',
@@ -50,7 +54,8 @@ import {MatIcon} from "@angular/material/icon";
 export class FinancesComponent implements OnInit {
   groupedTransactions: { [date: string]: Transaction[] } = {};
 
-  constructor(private transactionService: TransactionService) { }
+  constructor(private transactionService: TransactionService,
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.loadTransactions();
@@ -108,5 +113,18 @@ export class FinancesComponent implements OnInit {
         this.loadTransactions();
       });
     }
+  }
+
+  openNewTransactionDialog(): void {
+    const dialogRef = this.dialog.open(CreateTransactionComponent, {
+      width: '250px',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadTransactions();
+      }
+    });
   }
 }

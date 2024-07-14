@@ -5,6 +5,8 @@ import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {TokenInterceptor} from "./service/auth/TokenInterceptor";
+import {CalendarModule, CalendarUtils, DateAdapter} from "angular-calendar";
+import {adapterFactory} from "angular-calendar/date-adapters/date-fns";
 
 export const tokenInterceptorProvider: Provider =
   { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true };
@@ -15,6 +17,11 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAnimationsAsync(),
     importProvidersFrom(HttpClientModule),
+    importProvidersFrom(CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    })),
     tokenInterceptorProvider,
-    provideAnimationsAsync()],
+    provideAnimationsAsync(),
+  ],
 };
