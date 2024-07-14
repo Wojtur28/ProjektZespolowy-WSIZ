@@ -8,8 +8,11 @@ import { TransactionService } from "@app/client/api/transaction.service";
 import { format } from "date-fns";
 import { pl } from "date-fns/locale/pl";
 import { MatIcon } from "@angular/material/icon";
-import { CreateTransactionComponent } from "@app/features/finances/create-transaction/create-transaction/create-transaction.component";
+import { CreateTransactionComponent } from "@app/features/transaction/create-transaction/create-transaction.component";
 import { MatDialog } from "@angular/material/dialog";
+import {
+  TransactionCategoriesComponent
+} from "@app/features/transaction/transaction-categories/transaction-categories.component";
 
 @Component({
   selector: 'app-finances',
@@ -39,22 +42,28 @@ import { MatDialog } from "@angular/material/dialog";
     MatIcon,
     MatIconButton
   ],
-  templateUrl: './finances.component.html',
-  styleUrls: ['./finances.component.css']
+  templateUrl: './transaction.component.html',
+  styleUrls: ['./transaction.component.css']
 })
-export class FinancesComponent implements OnInit {
+export class TransactionComponent implements OnInit {
   groupedTransactions: { [date: string]: Transaction[] } = {};
+  filteredTransactions: { [date: string]: Transaction[] } = {};
+  selectedMonth: number = new Date().getMonth() + 1;
+  months: number[] = Array.from({ length: 12 }, (_, i) => i + 1);
+  monthNames: string[] = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'];
 
   constructor(private transactionService: TransactionService,
               private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.selectedMonth = new Date().getMonth() + 1;
     this.loadTransactions();
   }
 
   loadTransactions() {
     this.transactionService.getTransactions().subscribe(transactions => {
       this.groupTransactionsByDate(transactions);
+      this.filterTransactionsByMonth(this.selectedMonth);
     });
   }
 
@@ -77,6 +86,20 @@ export class FinancesComponent implements OnInit {
       }, {} as { [date: string]: Transaction[] });
   }
 
+  filterTransactionsByMonth(month: number) {
+    this.filteredTransactions = {};
+    for (const date in this.groupedTransactions) {
+      if (new Date(date).getMonth() + 1 === month) {
+        this.filteredTransactions[date] = this.groupedTransactions[date];
+      }
+    }
+  }
+
+  setMonth(month: number) {
+    this.selectedMonth = month;
+    this.filterTransactionsByMonth(month);
+  }
+
   getFormattedDate(date: string): string {
     const parsedDate = new Date(date);
     return format(parsedDate, 'EEEE, yyyy-MM-dd', { locale: pl });
@@ -91,11 +114,11 @@ export class FinancesComponent implements OnInit {
   }
 
   getDates(): string[] {
-    return Object.keys(this.groupedTransactions);
+    return Object.keys(this.filteredTransactions);
   }
 
   getDailyBalance(date: string): number {
-    const transactions = this.groupedTransactions[date];
+    const transactions = this.filteredTransactions[date];
     let balance = 0;
     transactions.forEach(transaction => {
       if (transaction.amount !== undefined) {
@@ -131,6 +154,13 @@ export class FinancesComponent implements OnInit {
       if (result) {
         this.loadTransactions();
       }
+    });
+  }
+
+  openManageCategoriesDialog(): void {
+    this.dialog.open(TransactionCategoriesComponent, {
+      width: '80%',
+      maxWidth: '1000px'
     });
   }
 }

@@ -2,7 +2,7 @@ package org.example.backend.transaction.transactionCategory;
 
 import lombok.AllArgsConstructor;
 import org.example.backend.mapper.TransactionCategoryMapper;
-import org.example.backend.user.UserRepository;
+import org.example.backend.transaction.TransactionType;
 import org.springframework.stereotype.Service;
 import org.example.model.TransactionCategory;
 
@@ -15,7 +15,6 @@ public class TransactionCategoryService {
 
     private final TransactionCategoryRepository transactionCategoryRepository;
     private final TransactionCategoryMapper transactionCategoryMapper;
-    private final UserRepository userRepository;
 
     public TransactionCategory getTransactionCategory(UUID id) {
         return transactionCategoryMapper.toDto(transactionCategoryRepository.findById(id).orElseThrow());
@@ -33,6 +32,7 @@ public class TransactionCategoryService {
     public TransactionCategory updateTransactionCategory(UUID id, TransactionCategory transactionCategory) {
         TransactionCategoryEntity transactionCategoryEntity = transactionCategoryRepository.findById(id).orElseThrow();
         transactionCategoryEntity.setName(transactionCategory.getName());
+        transactionCategoryEntity.setType(TransactionType.valueOf(transactionCategory.getType().name()));
         return transactionCategoryMapper.toDto(transactionCategoryRepository.save(transactionCategoryEntity));
     }
 
