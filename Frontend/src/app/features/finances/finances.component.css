@@ -14,19 +14,23 @@
 table {
   width: 100%;
   table-layout: fixed;
+  border-collapse: collapse;
 }
 
 .mat-header-cell, .mat-cell {
   padding: 8px;
   white-space: nowrap;
+  text-align: left;
 }
 
 .mat-header-cell {
   background-color: #f1f1f1;
+  font-weight: bold;
 }
 
 .mat-elevation-z8 {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
 .expense-amount {
@@ -38,11 +42,23 @@ table {
 }
 
 .date-header {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
   margin-top: 20px;
   width: 100%;
   text-align: left;
+  color: #333;
+}
+
+.balance-header {
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+  margin-bottom: 10px;
+  width: 100%;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
 }
 
 .action-buttons {
@@ -70,4 +86,23 @@ table {
 
 .mat-mdc-raised-button:not(:disabled) {
   color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
+
+.mat-mdc-raised-button:not(:disabled):hover {
+  background-color: #0056b3;
+}
+
+.positive-balance {
+  color: green;
+}
+
+.negative-balance {
+  color: red;
+}
+

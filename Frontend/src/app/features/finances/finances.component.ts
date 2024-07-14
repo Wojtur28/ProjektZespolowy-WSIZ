@@ -1,24 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-
-import {MatButton, MatIconButton} from "@angular/material/button";
-import {CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
-import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle} from "@angular/material/card";
-import {
-  MatCell,
-  MatCellDef,
-  MatColumnDef,
-  MatHeaderCell,
-  MatHeaderCellDef, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable
-} from "@angular/material/table";
-import {Transaction} from "@app/client/model/transaction";
-import {TransactionService} from "@app/client/api/transaction.service";
-import {format} from "date-fns";
-import {pl} from "date-fns/locale/pl";
-import {MatIcon} from "@angular/material/icon";
-import {
-  CreateTransactionComponent
-} from "@app/features/finances/create-transaction/create-transaction/create-transaction.component";
-import {MatDialog} from "@angular/material/dialog";
+import { Component, OnInit } from '@angular/core';
+import { MatButton, MatIconButton } from "@angular/material/button";
+import { CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf } from "@angular/common";
+import { MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle } from "@angular/material/card";
+import { MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderCellDef, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable } from "@angular/material/table";
+import { Transaction } from "@app/client/model/transaction";
+import { TransactionService } from "@app/client/api/transaction.service";
+import { format } from "date-fns";
+import { pl } from "date-fns/locale/pl";
+import { MatIcon } from "@angular/material/icon";
+import { CreateTransactionComponent } from "@app/features/finances/create-transaction/create-transaction/create-transaction.component";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: 'app-finances',
@@ -49,7 +40,7 @@ import {MatDialog} from "@angular/material/dialog";
     MatIconButton
   ],
   templateUrl: './finances.component.html',
-  styleUrl: './finances.component.css'
+  styleUrls: ['./finances.component.css']
 })
 export class FinancesComponent implements OnInit {
   groupedTransactions: { [date: string]: Transaction[] } = {};
@@ -103,6 +94,21 @@ export class FinancesComponent implements OnInit {
     return Object.keys(this.groupedTransactions);
   }
 
+  getDailyBalance(date: string): number {
+    const transactions = this.groupedTransactions[date];
+    let balance = 0;
+    transactions.forEach(transaction => {
+      if (transaction.amount !== undefined) {
+        if (this.isIncome(transaction)) {
+          balance += transaction.amount;
+        } else if (this.isExpense(transaction)) {
+          balance -= transaction.amount;
+        }
+      }
+    });
+    return balance;
+  }
+
   editTransaction(transaction: Transaction): void {
     console.log('Edytuj transakcję:', transaction);
   }
@@ -117,7 +123,7 @@ export class FinancesComponent implements OnInit {
 
   openNewTransactionDialog(): void {
     const dialogRef = this.dialog.open(CreateTransactionComponent, {
-      width: '250px',
+      width: '300px',
       data: {}
     });
 
