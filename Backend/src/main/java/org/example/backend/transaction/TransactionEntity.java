@@ -25,6 +25,8 @@ public class TransactionEntity extends AuditBase {
     @Column(nullable = false)
     private LocalDate date;
 
+    private String description;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;

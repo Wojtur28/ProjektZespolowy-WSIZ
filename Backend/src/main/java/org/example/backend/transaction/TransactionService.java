@@ -44,6 +44,7 @@ public class TransactionService {
         TransactionEntity transactionEntity = transactionRepository.findById(id).orElseThrow();
         transactionEntity.setAmount(transaction.getAmount());
         transactionEntity.setDate(transaction.getDate());
+        transactionEntity.setDescription(transaction.getDescription());
         transactionEntity.setCategory(transactionCategoryMapper.toEntity(transaction.getCategory()));
         transactionEntity.setType(TransactionType.valueOf(transaction.getType().name()));
         return transactionMapper.toDto(transactionRepository.save(transactionEntity));

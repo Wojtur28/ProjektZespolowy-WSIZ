@@ -3,6 +3,9 @@
   <button mat-raised-button color="primary" (click)="openNewTransactionDialog()">Dodaj nową transakcję</button>
   <ng-container *ngFor="let date of getDates()">
     <h3 class="date-header">{{ getFormattedDate(date) }}</h3>
+    <h4 class="balance-header" [ngClass]="{'positive-balance': getDailyBalance(date) > 0, 'negative-balance': getDailyBalance(date) < 0}">
+      Bilans: {{ getDailyBalance(date) | currency:'PLN':'symbol':'1.2-2' }}
+    </h4>
     <table mat-table [dataSource]="groupedTransactions[date]" class="mat-elevation-z8">
 
       <ng-container matColumnDef="category">
@@ -10,18 +13,15 @@
         <td mat-cell *matCellDef="let element"> {{ element.category.name }} </td>
       </ng-container>
 
-
       <ng-container matColumnDef="description">
         <th mat-header-cell *matHeaderCellDef class="mat-column-description"> Opis </th>
         <td mat-cell *matCellDef="let element"> {{ element.description || 'Brak opisu' }} </td>
       </ng-container>
 
-
       <ng-container matColumnDef="amount">
         <th mat-header-cell *matHeaderCellDef class="mat-column-amount"> Kwota </th>
-        <td mat-cell *matCellDef="let element" [ngClass]="{'expense-amount': isExpense(element), 'income-amount': isIncome(element)}"> {{ element.amount | currency }} </td>
+        <td mat-cell *matCellDef="let element" [ngClass]="{'expense-amount': isExpense(element), 'income-amount': isIncome(element)}"> {{ element.amount | currency:'PLN':'symbol':'1.2-2' }} </td>
       </ng-container>
-
 
       <ng-container matColumnDef="options">
         <th mat-header-cell *matHeaderCellDef class="mat-column-options"> Opcje </th>
