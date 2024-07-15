@@ -17,7 +17,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { TransactionService } from "@app/client/api/transaction.service";
 import { TransactionCategoryService } from "@app/client/api/transactionCategory.service";
 import { TransactionCategory } from "@app/client/model/transactionCategory";
-import {NgForOf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-create-transaction',
@@ -34,7 +34,8 @@ import {NgForOf} from "@angular/common";
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    NgForOf
+    NgForOf,
+    NgIf
   ],
   templateUrl: './create-transaction.component.html',
   styleUrls: ['./create-transaction.component.css']
@@ -42,6 +43,8 @@ import {NgForOf} from "@angular/common";
 export class CreateTransactionComponent implements OnInit {
   newTransaction: Transaction = {};
   categories: TransactionCategory[] = [];
+  filteredCategories: TransactionCategory[] = [];
+  showTypeWarning: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<CreateTransactionComponent>,
@@ -56,12 +59,21 @@ export class CreateTransactionComponent implements OnInit {
     });
   }
 
+  filterCategories() {
+    if (this.newTransaction.type) {
+      this.filteredCategories = this.categories.filter(category => category.type === this.newTransaction.type);
+      this.showTypeWarning = false;
+    } else {
+      this.filteredCategories = [];
+      this.showTypeWarning = true;
+    }
+  }
+
   onCancel(): void {
     this.dialogRef.close(false);
   }
 
   onSave(): void {
-    // Normalizacja daty przed wysłaniem na serwer
     if (this.newTransaction.date) {
       this.newTransaction.date = this.normalizeDate(this.newTransaction.date);
     }

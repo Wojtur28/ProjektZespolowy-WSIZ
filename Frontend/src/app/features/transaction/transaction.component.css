@@ -61,6 +61,14 @@ table {
   padding-bottom: 5px;
 }
 
+.positive-balance {
+  color: rgb(0, 176, 13);
+}
+
+.negative-balance {
+  color: red;
+}
+
 .action-buttons {
   gap: 4px;
   justify-content: center;
