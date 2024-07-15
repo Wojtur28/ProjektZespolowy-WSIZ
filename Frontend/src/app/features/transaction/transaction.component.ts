@@ -5,14 +5,13 @@ import { MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle }
 import { MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderCellDef, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable } from "@angular/material/table";
 import { Transaction } from "@app/client/model/transaction";
 import { TransactionService } from "@app/client/api/transaction.service";
-import { format } from "date-fns";
-import { pl } from "date-fns/locale/pl";
 import { MatIcon } from "@angular/material/icon";
 import { CreateTransactionComponent } from "@app/features/transaction/create-transaction/create-transaction.component";
 import { MatDialog } from "@angular/material/dialog";
 import {
   TransactionCategoriesComponent
 } from "@app/features/transaction/transaction-categories/transaction-categories.component";
+import {EditTransactionComponent} from "@app/features/transaction/edit-transaction/edit-transaction.component";
 
 @Component({
   selector: 'app-finances',
@@ -77,7 +76,6 @@ export class TransactionComponent implements OnInit {
       return groups;
     }, {} as { [date: string]: Transaction[] });
 
-    // Sort the dates in descending order
     this.groupedTransactions = Object.keys(this.groupedTransactions)
       .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
       .reduce((obj, key) => {
@@ -102,7 +100,7 @@ export class TransactionComponent implements OnInit {
 
   getFormattedDate(date: string): string {
     const parsedDate = new Date(date);
-    return format(parsedDate, 'EEEE, yyyy-MM-dd', { locale: pl });
+    return parsedDate.toLocaleDateString('pl-PL', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
   }
 
   isExpense(transaction: Transaction): boolean {
@@ -133,7 +131,18 @@ export class TransactionComponent implements OnInit {
   }
 
   editTransaction(transaction: Transaction): void {
-    console.log('Edytuj transakcję:', transaction);
+    const dialogRef = this.dialog.open(EditTransactionComponent, {
+      width: '300px',
+      data: { transaction }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.transactionService.updateTransaction(result.id, result).subscribe(() => {
+          this.loadTransactions();
+        });
+      }
+    });
   }
 
   deleteTransaction(id: string): void {

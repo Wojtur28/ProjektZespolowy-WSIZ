@@ -1,32 +1,32 @@
-<h1 mat-dialog-title>Dodaj nową transakcję</h1>
+<h1 mat-dialog-title>Edytuj transakcję</h1>
 <div mat-dialog-content>
   <mat-form-field>
     <mat-label>Data</mat-label>
-    <input matInput [matDatepicker]="picker" [(ngModel)]="newTransaction.date">
+    <input matInput [matDatepicker]="picker" [(ngModel)]="transaction.date">
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Typ</mat-label>
-    <mat-select [(ngModel)]="newTransaction.type" (selectionChange)="filterCategories()">
+    <mat-select [(ngModel)]="transaction.type" (selectionChange)="filterCategories()">
       <mat-option value="INCOME">Przychód</mat-option>
       <mat-option value="EXPENSE">Wydatek</mat-option>
     </mat-select>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Kategoria</mat-label>
-    <mat-select [(ngModel)]="newTransaction.category" [disabled]="!newTransaction.type">
+    <mat-select [(ngModel)]="transaction.category" [disabled]="!transaction.type">
       <mat-option *ngFor="let category of filteredCategories" [value]="category">{{ category.name }}</mat-option>
     </mat-select>
     <mat-error *ngIf="showTypeWarning">Najpierw wybierz typ transakcji</mat-error>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Opis</mat-label>
-    <input matInput [(ngModel)]="newTransaction.description">
+      <input matInput [(ngModel)]="transaction.description">
   </mat-form-field>
   <mat-form-field>
     <mat-label>Kwota</mat-label>
-    <input matInput [(ngModel)]="newTransaction.amount" type="number">
+    <input matInput [(ngModel)]="transaction.amount" type="number">
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
