@@ -19,6 +19,8 @@ public class TransactionCategoryEntity extends AuditBase {
     @Column(nullable = false, unique = true)
     private String name;
 
+    private double expenseLimit;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TransactionType type;

@@ -24,6 +24,15 @@
         </td>
       </ng-container>
 
+      <ng-container matColumnDef="expenseLimit">
+        <th mat-header-cell *matHeaderCellDef>Limit</th>
+        <td mat-cell *matCellDef="let category">
+          <mat-form-field>
+            <input matInput type="number" [(ngModel)]="category.expenseLimit">
+          </mat-form-field>
+        </td>
+      </ng-container>
+
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Akcje</th>
         <td mat-cell *matCellDef="let category">
@@ -36,8 +45,8 @@
         </td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="['name', 'type', 'actions']"></tr>
-      <tr mat-row *matRowDef="let row; columns: ['name', 'type', 'actions'];"></tr>
+      <tr mat-header-row *matHeaderRowDef="['name', 'type', 'expenseLimit', 'actions']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['name', 'type', 'expenseLimit', 'actions'];"></tr>
     </table>
   </div>
 

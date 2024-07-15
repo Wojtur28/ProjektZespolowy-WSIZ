@@ -14,6 +14,7 @@
 export interface TransactionCategory { 
     id?: string;
     name?: string;
+    expenseLimit?: number;
     type?: TransactionCategory.TypeEnum;
 }
 export namespace TransactionCategory {

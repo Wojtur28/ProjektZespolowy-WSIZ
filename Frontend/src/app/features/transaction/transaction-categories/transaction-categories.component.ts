@@ -63,7 +63,7 @@ export class TransactionCategoriesComponent implements OnInit {
   }
 
   addEmptyCategory() {
-    const emptyCategory: TransactionCategory = { name: 'Nowa Kategoria', type: 'INCOME' };
+    const emptyCategory: TransactionCategory = { name: 'Nowa Kategoria', type: 'INCOME', expenseLimit: 0 };
     this.categoryService.createTransactionCategory(emptyCategory).subscribe(() => {
       this.loadCategories();
     });

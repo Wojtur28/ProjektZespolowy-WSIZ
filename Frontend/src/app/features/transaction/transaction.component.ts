@@ -12,6 +12,9 @@ import {
   TransactionCategoriesComponent
 } from "@app/features/transaction/transaction-categories/transaction-categories.component";
 import {EditTransactionComponent} from "@app/features/transaction/edit-transaction/edit-transaction.component";
+import {TransactionCategoryService} from "@app/client/api/transactionCategory.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatTooltip} from "@angular/material/tooltip";
 
 @Component({
   selector: 'app-finances',
@@ -39,7 +42,8 @@ import {EditTransactionComponent} from "@app/features/transaction/edit-transacti
     MatTable,
     NgClass,
     MatIcon,
-    MatIconButton
+    MatIconButton,
+    MatTooltip
   ],
   templateUrl: './transaction.component.html',
   styleUrls: ['./transaction.component.css']
@@ -50,9 +54,12 @@ export class TransactionComponent implements OnInit {
   selectedMonth: number = new Date().getMonth() + 1;
   months: number[] = Array.from({ length: 12 }, (_, i) => i + 1);
   monthNames: string[] = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'];
+  overLimitCategories: string[] = [];
 
   constructor(private transactionService: TransactionService,
-              private dialog: MatDialog) { }
+              private categoryService: TransactionCategoryService,
+              private dialog: MatDialog,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.selectedMonth = new Date().getMonth() + 1;
@@ -63,6 +70,7 @@ export class TransactionComponent implements OnInit {
     this.transactionService.getTransactions().subscribe(transactions => {
       this.groupTransactionsByDate(transactions);
       this.filterTransactionsByMonth(this.selectedMonth);
+      this.checkLimits();
     });
   }
 
@@ -93,7 +101,26 @@ export class TransactionComponent implements OnInit {
     }
   }
 
-  setMonth(month: number) {
+  checkLimits() {
+    this.overLimitCategories = [];
+    this.categoryService.getTransactionCategories().subscribe(categories => {
+      for (const category of categories) {
+        let totalAmount = 0;
+        for (const date in this.groupedTransactions) {
+          for (const transaction of this.groupedTransactions[date]) {
+            if (transaction.category && transaction.category.id === category.id && transaction.type === 'EXPENSE' && transaction.amount !== undefined) {
+              totalAmount += transaction.amount;
+            }
+          }
+        }
+        if (category.expenseLimit !== undefined && category.name && totalAmount > category.expenseLimit) {
+          this.overLimitCategories.push(category.name);
+        }
+      }
+    });
+  }
+
+  setMonth(month: number): void {
     this.selectedMonth = month;
     this.filterTransactionsByMonth(month);
   }
@@ -131,6 +158,7 @@ export class TransactionComponent implements OnInit {
   }
 
   editTransaction(transaction: Transaction): void {
+    console.log('Editing transaction:', transaction);
     const dialogRef = this.dialog.open(EditTransactionComponent, {
       width: '300px',
       data: { transaction }
@@ -138,9 +166,18 @@ export class TransactionComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.transactionService.updateTransaction(result.id, result).subscribe(() => {
+        if (result.id) {
+          this.transactionService.updateTransaction(result.id, result).subscribe(() => {
+            this.loadTransactions();
+          }, error => {
+            console.error('Error updating transaction:', error);
+          });
+        } else {
+          console.error('Result does not contain an ID:', result);
           this.loadTransactions();
-        });
+        }
+      } else {
+        console.log('Dialog was closed without saving changes.');
       }
     });
   }
