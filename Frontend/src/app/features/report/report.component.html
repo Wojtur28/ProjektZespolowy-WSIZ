@@ -1,0 +1,60 @@
+<div class="reports-container">
+  <h2>Raporty</h2>
+
+  <div class="report-selection">
+    <mat-form-field>
+      <mat-label>Wybierz tydzień</mat-label>
+      <mat-select [(ngModel)]="selectedWeek" (selectionChange)="generateWeeklyReport()">
+
+        <mat-option *ngFor="let week of weeks" [value]="week">{{ week }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Wybierz miesiąc</mat-label>
+      <mat-select [(ngModel)]="selectedMonth" (selectionChange)="generateMonthlyReport()">
+
+        <mat-option *ngFor="let month of months" [value]="month">{{ monthNames[month - 1] }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Wybierz kwartał</mat-label>
+      <mat-select [(ngModel)]="selectedQuarter" (selectionChange)="generateQuarterlyReport()">
+
+        <mat-option *ngFor="let quarter of quarters" [value]="quarter">{{ quarter }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Wybierz rok</mat-label>
+      <input matInput [(ngModel)]="selectedYear" (ngModelChange)="generateYearlyReport()" type="number">
+    </mat-form-field>
+  </div>
+
+  <div class="report-sections">
+    <div class="report-section">
+      <h3>Raport tygodniowy</h3>
+      <div *ngIf="weeklyReport">
+      </div>
+    </div>
+
+    <div class="report-section">
+      <h3>Raport miesięczny</h3>
+      <div *ngIf="monthlyReport">
+      </div>
+    </div>
+
+    <div class="report-section">
+      <h3>Raport kwartalny</h3>
+      <div *ngIf="quarterlyReport">
+      </div>
+    </div>
+
+    <div class="report-section">
+      <h3>Raport roczny</h3>
+      <div *ngIf="yearlyReport">
+      </div>
+    </div>
+  </div>
+</div>
