@@ -4,6 +4,7 @@ import {RegisterComponent} from "./features/register/register.component";
 import {HomeComponent} from "./features/home/home.component";
 import {AuthGuard} from "@app/service/auth/auth.guard";
 import {TransactionComponent} from "@app/features/transaction/transaction.component";
+import {ReportComponent} from "@app/features/report/report.component";
 
 export const routes: Routes = [
   {
@@ -20,8 +21,13 @@ export const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: 'finances',
+    path: 'transaction',
     component: TransactionComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'reports',
+    component: ReportComponent,
     canActivate: [AuthGuard]
   }
 ];

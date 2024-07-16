@@ -121,3 +121,14 @@ table {
 .month-navigation button {
   margin: 5px 5px 0;
 }
+
+.warning-icon {
+  color: red;
+  font-size: 24px;
+  vertical-align: middle;
+  margin-left: 10px;
+}
+
+.mat-icon-button {
+  color: inherit;
+}

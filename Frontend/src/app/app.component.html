@@ -4,7 +4,8 @@
     <span class="spacer"></span>
     <span *ngIf="authService.isLoggedIn()">
       <button mat-button routerLink="/">Strona główna</button>
-      <button mat-button routerLink="/finances">Finanse</button>
+      <button mat-button routerLink="/transaction">Finanse</button>
+      <button mat-button routerLink="/reports">Raporty</button>
     </span>
     <span [hidden]="authService.isLoggedIn()">
       <button mat-button routerLink="/register">

@@ -1,0 +1,33 @@
+.reports-container {
+  margin: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.report-selection {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.report-sections {
+  display: flex;
+  justify-content: space-between;
+}
+
+.report-section {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.report-section h3 {
+  margin-bottom: 10px;
+  font-size: 20px;
+  color: #333;
+}
+
+.mat-form-field {
+  width: 20%;
+}
