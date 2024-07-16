@@ -5,7 +5,6 @@
     <mat-form-field>
       <mat-label>Wybierz tydzień</mat-label>
       <mat-select [(ngModel)]="selectedWeek" (selectionChange)="generateWeeklyReport()">
-
         <mat-option *ngFor="let week of weeks" [value]="week">{{ week }}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -13,7 +12,6 @@
     <mat-form-field>
       <mat-label>Wybierz miesiąc</mat-label>
       <mat-select [(ngModel)]="selectedMonth" (selectionChange)="generateMonthlyReport()">
-
         <mat-option *ngFor="let month of months" [value]="month">{{ monthNames[month - 1] }}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -21,7 +19,6 @@
     <mat-form-field>
       <mat-label>Wybierz kwartał</mat-label>
       <mat-select [(ngModel)]="selectedQuarter" (selectionChange)="generateQuarterlyReport()">
-
         <mat-option *ngFor="let quarter of quarters" [value]="quarter">{{ quarter }}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -33,27 +30,39 @@
   </div>
 
   <div class="report-sections">
-    <div class="report-section">
+    <div class="report-section" *ngIf="weeklyReport">
       <h3>Raport tygodniowy</h3>
-      <div *ngIf="weeklyReport">
+      <div class="report-details">
+        <p><strong>Przychód:</strong> <span class="income-amount">{{ weeklyReport.totalIncome | currency:'PLN':'symbol':'1.2-2' }}</span></p>
+        <p><strong>Wydatki:</strong> <span class="expense-amount">{{ weeklyReport.totalExpense | currency:'PLN':'symbol':'1.2-2' }}</span></p>
+        <p><strong>Bilans:</strong> <span [ngClass]="{'positive-balance': weeklyReport.balance >= 0, 'negative-balance': weeklyReport.balance < 0}">{{ weeklyReport.balance | currency:'PLN':'symbol':'1.2-2' }}</span></p>
       </div>
     </div>
 
-    <div class="report-section">
+    <div class="report-section" *ngIf="monthlyReport">
       <h3>Raport miesięczny</h3>
-      <div *ngIf="monthlyReport">
+      <div class="report-details">
+        <p><strong>Przychód:</strong> <span class="income-amount">{{ monthlyReport.totalIncome | currency:'PLN':'symbol':'1.2-2' }}</span></p>
+        <p><strong>Wydatki:</strong> <span class="expense-amount">{{ monthlyReport.totalExpense | currency:'PLN':'symbol':'1.2-2' }}</span></p>
+        <p><strong>Bilans:</strong> <span [ngClass]="{'positive-balance': monthlyReport.balance >= 0, 'negative-balance': monthlyReport.balance < 0}">{{ monthlyReport.balance | currency:'PLN':'symbol':'1.2-2' }}</span></p>
       </div>
     </div>
 
-    <div class="report-section">
+    <div class="report-section" *ngIf="quarterlyReport">
       <h3>Raport kwartalny</h3>
-      <div *ngIf="quarterlyReport">
+      <div class="report-details">
+        <p><strong>Przychód:</strong> <span class="income-amount">{{ quarterlyReport.totalIncome | currency:'PLN':'symbol':'1.2-2' }}</span></p>
+        <p><strong>Wydatki:</strong> <span class="expense-amount">{{ quarterlyReport.totalExpense | currency:'PLN':'symbol':'1.2-2' }}</span></p>
+        <p><strong>Bilans:</strong> <span [ngClass]="{'positive-balance': quarterlyReport.balance >= 0, 'negative-balance': quarterlyReport.balance < 0}">{{ quarterlyReport.balance | currency:'PLN':'symbol':'1.2-2' }}</span></p>
       </div>
     </div>
 
-    <div class="report-section">
+    <div class="report-section" *ngIf="yearlyReport">
       <h3>Raport roczny</h3>
-      <div *ngIf="yearlyReport">
+      <div class="report-details">
+        <p><strong>Przychód:</strong> <span class="income-amount">{{ yearlyReport.totalIncome | currency:'PLN':'symbol':'1.2-2' }}</span></p>
+        <p><strong>Wydatki:</strong> <span class="expense-amount">{{ yearlyReport.totalExpense | currency:'PLN':'symbol':'1.2-2' }}</span></p>
+        <p><strong>Bilans:</strong> <span [ngClass]="{'positive-balance': yearlyReport.balance >= 0, 'negative-balance': yearlyReport.balance < 0}">{{ yearlyReport.balance | currency:'PLN':'symbol':'1.2-2' }}</span></p>
       </div>
     </div>
   </div>
