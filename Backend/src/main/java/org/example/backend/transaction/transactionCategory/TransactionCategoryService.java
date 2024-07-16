@@ -33,6 +33,7 @@ public class TransactionCategoryService {
         TransactionCategoryEntity transactionCategoryEntity = transactionCategoryRepository.findById(id).orElseThrow();
         transactionCategoryEntity.setName(transactionCategory.getName());
         transactionCategoryEntity.setType(TransactionType.valueOf(transactionCategory.getType().name()));
+        transactionCategoryEntity.setExpenseLimit(transactionCategory.getExpenseLimit());
         return transactionCategoryMapper.toDto(transactionCategoryRepository.save(transactionCategoryEntity));
     }
 
