@@ -14,20 +14,45 @@
 
 .report-sections {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .report-section {
-  flex: 1;
-  margin-right: 10px;
+  flex: 1 1 calc(25% - 20px); /* 4 columns layout with gap */
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .report-section h3 {
+  margin-top: 0;
   margin-bottom: 10px;
   font-size: 20px;
   color: #333;
 }
 
+.report-details {
+  margin-top: 10px;
+}
+
 .mat-form-field {
   width: 20%;
+}
+
+.expense-amount {
+  color: red;
+}
+
+.income-amount {
+  color: lawngreen;
+}
+
+.positive-balance {
+  color: rgb(0, 176, 13);
+}
+
+.negative-balance {
+  color: red;
 }

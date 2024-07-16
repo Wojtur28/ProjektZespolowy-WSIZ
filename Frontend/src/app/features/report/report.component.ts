@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {TransactionService} from "@app/client/api/transaction.service";
 import {Transaction} from "@app/client/model/transaction";
 import {MatFormField, MatLabel, MatOption, MatSelect} from "@angular/material/select";
-import {NgForOf} from "@angular/common";
+import {CurrencyPipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {MatInput} from "@angular/material/input";
 
@@ -16,7 +16,10 @@ import {MatInput} from "@angular/material/input";
     MatOption,
     NgForOf,
     FormsModule,
-    MatInput
+    MatInput,
+    NgIf,
+    CurrencyPipe,
+    NgClass
   ],
   templateUrl: './report.component.html',
   styleUrl: './report.component.css'
@@ -41,7 +44,11 @@ export class ReportComponent implements OnInit {
   constructor(private transactionService: TransactionService) { }
 
   ngOnInit(): void {
-    this.selectedYear = new Date().getFullYear();
+    const currentDate = new Date();
+    this.selectedYear = currentDate.getFullYear();
+    this.selectedMonth = currentDate.getMonth() + 1;
+    this.selectedWeek = `${currentDate.getFullYear()}-${this.getWeekNumber(currentDate)}`;
+    this.selectedQuarter = `Q${Math.floor(currentDate.getMonth() / 3) + 1}`;
     this.loadTransactions();
   }
 
@@ -64,57 +71,23 @@ export class ReportComponent implements OnInit {
     const [year, week] = this.selectedWeek.split('-');
     const currentWeek = this.getWeekDates(parseInt(year), parseInt(week));
     const weeklyTransactions = this.transactions.filter(transaction => {
-      if (!transaction.date) {
-        return false;
-      }
+      if (!transaction.date) return false;
       const transactionDate = new Date(transaction.date);
       return transactionDate >= currentWeek.start && transactionDate <= currentWeek.end;
     });
 
-    const report = {
-      totalIncome: 0,
-      totalExpense: 0,
-      balance: 0
-    };
-
-    weeklyTransactions.forEach(transaction => {
-      if (transaction.type === 'INCOME' && transaction.amount) {
-        report.totalIncome += transaction.amount;
-      } else if (transaction.type === 'EXPENSE' && transaction.amount) {
-        report.totalExpense += transaction.amount;
-      }
-    });
-
-    report.balance = report.totalIncome - report.totalExpense;
-    this.weeklyReport = report;
+    this.weeklyReport = this.calculateReport(weeklyTransactions);
   }
 
   generateMonthlyReport(): void {
     if (!this.selectedMonth) return;
     const monthlyTransactions = this.transactions.filter(transaction => {
-      if (!transaction.date) {
-        return false;
-      }
+      if (!transaction.date) return false;
       const transactionDate = new Date(transaction.date);
       return transactionDate.getFullYear() === this.selectedYear && transactionDate.getMonth() + 1 === this.selectedMonth;
     });
 
-    const report = {
-      totalIncome: 0,
-      totalExpense: 0,
-      balance: 0
-    };
-
-    monthlyTransactions.forEach(transaction => {
-      if (transaction.type === 'INCOME' && transaction.amount) {
-        report.totalIncome += transaction.amount;
-      } else if (transaction.type === 'EXPENSE' && transaction.amount) {
-        report.totalExpense += transaction.amount;
-      }
-    });
-
-    report.balance = report.totalIncome - report.totalExpense;
-    this.monthlyReport = report;
+    this.monthlyReport = this.calculateReport(monthlyTransactions);
   }
 
   generateQuarterlyReport(): void {
@@ -123,49 +96,34 @@ export class ReportComponent implements OnInit {
     const endMonth = startMonth + 2;
 
     const quarterlyTransactions = this.transactions.filter(transaction => {
-      if (!transaction.date) {
-        return false;
-      }
+      if (!transaction.date) return false;
       const transactionDate = new Date(transaction.date);
       const month = transactionDate.getMonth();
       return transactionDate.getFullYear() === this.selectedYear && month >= startMonth && month <= endMonth;
     });
 
-    const report = {
-      totalIncome: 0,
-      totalExpense: 0,
-      balance: 0
-    };
-
-    quarterlyTransactions.forEach(transaction => {
-      if (transaction.type === 'INCOME' && transaction.amount) {
-        report.totalIncome += transaction.amount;
-      } else if (transaction.type === 'EXPENSE' && transaction.amount) {
-        report.totalExpense += transaction.amount;
-      }
-    });
-
-    report.balance = report.totalIncome - report.totalExpense;
-    this.quarterlyReport = report;
+    this.quarterlyReport = this.calculateReport(quarterlyTransactions);
   }
 
   generateYearlyReport(): void {
     if (!this.selectedYear) return;
     const yearlyTransactions = this.transactions.filter(transaction => {
-      if (!transaction.date) {
-        return false;
-      }
+      if (!transaction.date) return false;
       const transactionDate = new Date(transaction.date);
       return transactionDate.getFullYear() === this.selectedYear;
     });
 
+    this.yearlyReport = this.calculateReport(yearlyTransactions);
+  }
+
+  calculateReport(transactions: Transaction[]): any {
     const report = {
       totalIncome: 0,
       totalExpense: 0,
       balance: 0
     };
 
-    yearlyTransactions.forEach(transaction => {
+    transactions.forEach(transaction => {
       if (transaction.type === 'INCOME' && transaction.amount) {
         report.totalIncome += transaction.amount;
       } else if (transaction.type === 'EXPENSE' && transaction.amount) {
@@ -174,7 +132,7 @@ export class ReportComponent implements OnInit {
     });
 
     report.balance = report.totalIncome - report.totalExpense;
-    this.yearlyReport = report;
+    return report;
   }
 
   generateWeeks(): string[] {
@@ -184,6 +142,12 @@ export class ReportComponent implements OnInit {
       weeks.push(`${year}-${i}`);
     }
     return weeks;
+  }
+
+  getWeekNumber(d: Date): number {
+    const oneJan = new Date(d.getFullYear(), 0, 1);
+    const numberOfDays = Math.floor((d.getTime() - oneJan.getTime()) / (24 * 60 * 60 * 1000));
+    return Math.ceil((d.getDay() + 1 + numberOfDays) / 7);
   }
 
   getWeekDates(year: number, week: number): { start: Date, end: Date } {
@@ -200,4 +164,3 @@ export class ReportComponent implements OnInit {
     return { start, end };
   }
 }
-
