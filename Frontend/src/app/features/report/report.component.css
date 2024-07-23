@@ -33,7 +33,8 @@
   color: #333;
 }
 
-.report-details {
+.report-details,
+.forecast-details {
   margin-top: 10px;
 }
 

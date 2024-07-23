@@ -3,10 +3,10 @@
 
   <div class="report-selection">
     <mat-form-field>
-      <mat-label>Wybierz tydzień</mat-label>
-      <mat-select [(ngModel)]="selectedWeek" (selectionChange)="generateWeeklyReport()">
-        <mat-option *ngFor="let week of weeks" [value]="week">{{ week }}</mat-option>
-      </mat-select>
+      <mat-label>Wybierz datę tygodnia</mat-label>
+      <input matInput [matDatepicker]="weekPicker" [(ngModel)]="selectedDate" (ngModelChange)="generateWeeklyReport()">
+      <mat-datepicker-toggle matSuffix [for]="weekPicker"></mat-datepicker-toggle>
+      <mat-datepicker #weekPicker></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field>
@@ -25,7 +25,9 @@
 
     <mat-form-field>
       <mat-label>Wybierz rok</mat-label>
-      <input matInput [(ngModel)]="selectedYear" (ngModelChange)="generateYearlyReport()" type="number">
+      <mat-select [(ngModel)]="selectedYear" (selectionChange)="generateReports()">
+        <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
+      </mat-select>
     </mat-form-field>
   </div>
 
@@ -37,6 +39,10 @@
         <p><strong>Wydatki:</strong> <span class="expense-amount">{{ weeklyReport.totalExpense | currency:'PLN':'symbol':'1.2-2' }}</span></p>
         <p><strong>Bilans:</strong> <span [ngClass]="{'positive-balance': weeklyReport.balance >= 0, 'negative-balance': weeklyReport.balance < 0}">{{ weeklyReport.balance | currency:'PLN':'symbol':'1.2-2' }}</span></p>
       </div>
+      <div class="forecast-details" *ngIf="weeklyForecast">
+        <h4>Prognoza tygodniowa</h4>
+        <p><strong>Średnie wydatki:</strong> <span class="expense-amount">{{ weeklyForecast.average | currency:'PLN':'symbol':'1.2-2' }}</span></p>
+      </div>
     </div>
 
     <div class="report-section" *ngIf="monthlyReport">
@@ -45,6 +51,10 @@
         <p><strong>Przychód:</strong> <span class="income-amount">{{ monthlyReport.totalIncome | currency:'PLN':'symbol':'1.2-2' }}</span></p>
         <p><strong>Wydatki:</strong> <span class="expense-amount">{{ monthlyReport.totalExpense | currency:'PLN':'symbol':'1.2-2' }}</span></p>
         <p><strong>Bilans:</strong> <span [ngClass]="{'positive-balance': monthlyReport.balance >= 0, 'negative-balance': monthlyReport.balance < 0}">{{ monthlyReport.balance | currency:'PLN':'symbol':'1.2-2' }}</span></p>
+      </div>
+      <div class="forecast-details" *ngIf="monthlyForecast">
+        <h4>Prognoza miesięczna</h4>
+        <p><strong>Średnie wydatki:</strong> <span class="expense-amount">{{ monthlyForecast.average | currency:'PLN':'symbol':'1.2-2' }}</span></p>
       </div>
     </div>
 
@@ -55,6 +65,10 @@
         <p><strong>Wydatki:</strong> <span class="expense-amount">{{ quarterlyReport.totalExpense | currency:'PLN':'symbol':'1.2-2' }}</span></p>
         <p><strong>Bilans:</strong> <span [ngClass]="{'positive-balance': quarterlyReport.balance >= 0, 'negative-balance': quarterlyReport.balance < 0}">{{ quarterlyReport.balance | currency:'PLN':'symbol':'1.2-2' }}</span></p>
       </div>
+      <div class="forecast-details" *ngIf="quarterlyForecast">
+        <h4>Prognoza kwartalna</h4>
+        <p><strong>Średnie wydatki:</strong> <span class="expense-amount">{{ quarterlyForecast.average | currency:'PLN':'symbol':'1.2-2' }}</span></p>
+      </div>
     </div>
 
     <div class="report-section" *ngIf="yearlyReport">
@@ -63,6 +77,10 @@
         <p><strong>Przychód:</strong> <span class="income-amount">{{ yearlyReport.totalIncome | currency:'PLN':'symbol':'1.2-2' }}</span></p>
         <p><strong>Wydatki:</strong> <span class="expense-amount">{{ yearlyReport.totalExpense | currency:'PLN':'symbol':'1.2-2' }}</span></p>
         <p><strong>Bilans:</strong> <span [ngClass]="{'positive-balance': yearlyReport.balance >= 0, 'negative-balance': yearlyReport.balance < 0}">{{ yearlyReport.balance | currency:'PLN':'symbol':'1.2-2' }}</span></p>
+      </div>
+      <div class="forecast-details" *ngIf="yearlyForecast">
+        <h4>Prognoza roczna</h4>
+        <p><strong>Średnie wydatki:</strong> <span class="expense-amount">{{ yearlyForecast.average | currency:'PLN':'symbol':'1.2-2' }}</span></p>
       </div>
     </div>
   </div>
