@@ -5,6 +5,7 @@ import {MatFormField, MatLabel, MatOption, MatSelect} from "@angular/material/se
 import {CurrencyPipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {MatInput} from "@angular/material/input";
+import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
 
 @Component({
   selector: 'app-report',
@@ -19,7 +20,10 @@ import {MatInput} from "@angular/material/input";
     MatInput,
     NgIf,
     CurrencyPipe,
-    NgClass
+    NgClass,
+    MatDatepicker,
+    MatDatepickerToggle,
+    MatDatepickerInput
   ],
   templateUrl: './report.component.html',
   styleUrl: './report.component.css'
@@ -31,12 +35,17 @@ export class ReportComponent implements OnInit {
   quarterlyReport: any;
   yearlyReport: any;
 
-  selectedWeek: string | undefined;
+  weeklyForecast: any;
+  monthlyForecast: any;
+  quarterlyForecast: any;
+  yearlyForecast: any;
+
+  selectedDate: Date | undefined;
+  selectedYear: number | undefined;
   selectedMonth: number | undefined;
   selectedQuarter: string | undefined;
-  selectedYear: number | undefined;
 
-  weeks = this.generateWeeks();
+  years = this.generateYears();
   months = Array.from({ length: 12 }, (_, i) => i + 1);
   quarters = ['Q1', 'Q2', 'Q3', 'Q4'];
   monthNames = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'];
@@ -44,11 +53,6 @@ export class ReportComponent implements OnInit {
   constructor(private transactionService: TransactionService) { }
 
   ngOnInit(): void {
-    const currentDate = new Date();
-    this.selectedYear = currentDate.getFullYear();
-    this.selectedMonth = currentDate.getMonth() + 1;
-    this.selectedWeek = `${currentDate.getFullYear()}-${this.getWeekNumber(currentDate)}`;
-    this.selectedQuarter = `Q${Math.floor(currentDate.getMonth() / 3) + 1}`;
     this.loadTransactions();
   }
 
@@ -56,6 +60,7 @@ export class ReportComponent implements OnInit {
     this.transactionService.getTransactions().subscribe(transactions => {
       this.transactions = transactions;
       this.generateReports();
+      this.generateForecasts();
     });
   }
 
@@ -66,10 +71,17 @@ export class ReportComponent implements OnInit {
     this.generateYearlyReport();
   }
 
+  generateForecasts(): void {
+    this.generateWeeklyForecast();
+    this.generateMonthlyForecast();
+    this.generateQuarterlyForecast();
+    this.generateYearlyForecast();
+  }
+
   generateWeeklyReport(): void {
-    if (!this.selectedWeek) return;
-    const [year, week] = this.selectedWeek.split('-');
-    const currentWeek = this.getWeekDates(parseInt(year), parseInt(week));
+    if (!this.selectedDate) return;
+    const weekNumber = this.getWeekNumber(this.selectedDate);
+    const currentWeek = this.getWeekDates(this.selectedDate.getFullYear(), weekNumber);
     const weeklyTransactions = this.transactions.filter(transaction => {
       if (!transaction.date) return false;
       const transactionDate = new Date(transaction.date);
@@ -80,7 +92,7 @@ export class ReportComponent implements OnInit {
   }
 
   generateMonthlyReport(): void {
-    if (!this.selectedMonth) return;
+    if (!this.selectedMonth || !this.selectedYear) return;
     const monthlyTransactions = this.transactions.filter(transaction => {
       if (!transaction.date) return false;
       const transactionDate = new Date(transaction.date);
@@ -91,7 +103,7 @@ export class ReportComponent implements OnInit {
   }
 
   generateQuarterlyReport(): void {
-    if (!this.selectedQuarter) return;
+    if (!this.selectedQuarter || !this.selectedYear) return;
     const startMonth = (parseInt(this.selectedQuarter[1]) - 1) * 3;
     const endMonth = startMonth + 2;
 
@@ -116,6 +128,97 @@ export class ReportComponent implements OnInit {
     this.yearlyReport = this.calculateReport(yearlyTransactions);
   }
 
+  generateWeeklyForecast(): void {
+    const allWeeks = this.generateWeeksForAllYears().slice(-3);
+    const weeklySums = allWeeks.map(week => {
+      const [year, weekNumber] = week.split('-');
+      const currentWeek = this.getWeekDates(parseInt(year), parseInt(weekNumber));
+      const weeklyTransactions = this.transactions.filter(transaction => {
+        if (!transaction.date) return false;
+        const transactionDate = new Date(transaction.date);
+        return transactionDate >= currentWeek.start && transactionDate <= currentWeek.end;
+      });
+      return this.calculateTotalExpense(weeklyTransactions);
+    });
+
+    this.weeklyForecast = this.calculateForecast(weeklySums);
+  }
+
+  generateMonthlyForecast(): void {
+    const lastThreeMonths = this.transactions.filter(transaction => transaction.date)
+      .map(transaction => new Date(transaction.date!).getMonth() + 1)
+      .slice(-3);
+    const monthlySums = lastThreeMonths.map(month => {
+      const monthlyTransactions = this.transactions.filter(transaction => {
+        if (!transaction.date) return false;
+        const transactionDate = new Date(transaction.date);
+        return transactionDate.getMonth() + 1 === month;
+      });
+      return this.calculateTotalExpense(monthlyTransactions);
+    });
+
+    this.monthlyForecast = this.calculateForecast(monthlySums);
+  }
+
+  generateQuarterlyForecast(): void {
+    const lastThreeQuarters = this.quarters.slice(-3);
+    const quarterlySums = lastThreeQuarters.map(quarter => {
+      const startMonth = (parseInt(quarter[1]) - 1) * 3;
+      const endMonth = startMonth + 2;
+      const quarterlyTransactions = this.transactions.filter(transaction => {
+        if (!transaction.date) return false;
+        const transactionDate = new Date(transaction.date);
+        const month = transactionDate.getMonth();
+        return month >= startMonth && month <= endMonth;
+      });
+      return this.calculateTotalExpense(quarterlyTransactions);
+    });
+
+    this.quarterlyForecast = this.calculateForecast(quarterlySums);
+  }
+
+  generateYearlyForecast(): void {
+    const validTransactions = this.transactions.filter(transaction => transaction.date);
+    if (validTransactions.length === 0) return;
+
+    const startYear = new Date(validTransactions[0].date!).getFullYear();
+    const endYear = new Date(validTransactions[validTransactions.length - 1].date!).getFullYear();
+    const years = [];
+    for (let year = startYear; year <= endYear; year++) {
+      years.push(year);
+    }
+
+    const lastThreeYears = years.slice(-3);
+    const yearlySums = lastThreeYears.map(year => {
+      const yearlyTransactions = this.transactions.filter(transaction => {
+        if (!transaction.date) return false;
+        const transactionDate = new Date(transaction.date);
+        return transactionDate.getFullYear() === year;
+      });
+      return this.calculateTotalExpense(yearlyTransactions);
+    });
+
+    this.yearlyForecast = this.calculateForecast(yearlySums);
+  }
+
+  calculateForecast(values: number[]): any {
+    const validValues = values.filter(value => value > 0);
+    if (validValues.length === 0) return { total: 0, average: 0 };
+    const total = validValues.reduce((acc, value) => acc + value, 0);
+    const average = total / validValues.length;
+    return {
+      total: total,
+      average: average
+    };
+  }
+
+  calculateTotalExpense(transactions: Transaction[]): number {
+    return transactions.reduce((acc, transaction) => {
+      if (transaction.type === 'EXPENSE' && transaction.amount) acc += transaction.amount;
+      return acc;
+    }, 0);
+  }
+
   calculateReport(transactions: Transaction[]): any {
     const report = {
       totalIncome: 0,
@@ -135,11 +238,26 @@ export class ReportComponent implements OnInit {
     return report;
   }
 
-  generateWeeks(): string[] {
-    const weeks = [];
-    const year = new Date().getFullYear();
-    for (let i = 1; i <= 52; i++) {
-      weeks.push(`${year}-${i}`);
+  generateYears(): number[] {
+    const currentYear = new Date().getFullYear();
+    const years = [];
+    for (let i = currentYear; i >= currentYear - 10; i--) {
+      years.push(i);
+    }
+    return years;
+  }
+
+  generateWeeksForAllYears(): string[] {
+    const weeks: string[] = [];
+    const validTransactions = this.transactions.filter(transaction => transaction.date);
+    if (validTransactions.length === 0) return weeks;
+
+    const startYear = new Date(validTransactions[0].date!).getFullYear();
+    const endYear = new Date(validTransactions[validTransactions.length - 1].date!).getFullYear();
+    for (let year = startYear; year <= endYear; year++) {
+      for (let i = 1; i <= 52; i++) {
+        weeks.push(`${year}-${i}`);
+      }
     }
     return weeks;
   }

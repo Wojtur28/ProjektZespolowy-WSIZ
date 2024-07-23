@@ -16,7 +16,7 @@ import {NgIf} from "@angular/common";
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'BudgetApp';
+  title = 'Projekt zespołowy';
 
   constructor(public authService: AuthService) {
   }
